@@ -7,25 +7,25 @@
     <thead class=" lighten-4">
         <tr>
             <th>#</th>
-            <th>หน่วย</th>
-            <th>เหตุการณ์</th>
-            <th>เวลา</th>
+            <th><strong>หน่วย</strong></th>
+            <th><strong>เหตุการณ์</strong></th>
+            <th><strong>เวลา</strong></th>
             <th>
                 <a class="blue-text"><i class="fa fa-user"></i></a>
             </th>
-            <th>Actions</th>
+            <th><strong>เพิ่มเติม</strong></th>
 
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let item of items | async | reverse ; let i = index">
-            <th scope="row"><b>{{ item.number }}</b></th>
-            <td>{{ item.team }}</td>
-            <td>{{ item.scene }}</td>
-            <td>{{ item.timestamp | date : 'HH:mm' }}</td>
-            <td>@{{ item.user }}</td>
+            <th scope="row"><strong>{{ item.number }}</strong></th>
+            <td><strong>{{ item.team }}</strong></td>
+            <td><strong>{{ item.scene }}</strong></td>
+            <td><strong>{{ item.timestamp | date : 'HH:mm' }}</strong></td>
+            <td><strong>@{{ item.user }}</strong></td>
             <td>
-                <a class="fa fa-server blue-text" aria-hidden="true" (click)="onManager(item)" (click)="form.show()"></a>
+                <a class="fa fa-server blue-text" aria-hidden="true" (click)="onManager(item)" (click)="formModal.show()"></a>
             </td>
         </tr>
 
@@ -35,7 +35,7 @@
 
 
 <!--Modal: Manager form-->
-<div mdbModal #form="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div mdbModal #formModal="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog cascading-modal" role="document">
         <!--Content-->
@@ -44,7 +44,7 @@
             <!--Header-->
             <div class="modal-header light-blue darken-3 white-text">
                 <h4 class="title"><i class="fa fa-pencil"></i> จัดการปฏิบัติการ ลำดับ {{ item.number}}</h4>
-                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="formModal.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -81,10 +81,12 @@
                 </div>
 
                 <div class="text-center mt-1-half">
-                    <button class="btn btn-blue accent-3 mb-2 waves-light" mdbWavesEffect (click)="onUpdate()" (click)="form.hide()">Edit/Save
+                    <button class="btn btn-blue accent-3 mb-2 waves-light" mdbWavesEffect (click)="onUpdate()" (click)="formModal.hide()">บันทึก/แก้ไข
                         <i class="fa fa-seve ml-1"></i></button>
-                    <button class="btn btn-blue-grey lighten-5 mb-2 waves-light" mdbWavesEffect (click)="form.hide()">Cancel
-                        <a class="red-text"><i class="fa fa-trash"></i></a></button>
+                    <button class="btn btn-danger accent-3 mb-2 waves-light" mdbWavesEffect (click)="onDelete()" (click)="formModal.hide()">ลบลำดับ
+                        <i class="fa fa-trash"></i></button>
+                    <button class="btn btn-blue-grey lighten-5 mb-2 waves-light" mdbWavesEffect (click)="formModal.hide()">Cancel
+                        <a class="red-text"></a></button>
                 </div>
 
             </div>

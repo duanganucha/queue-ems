@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AngularFireDatabase,AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
@@ -10,6 +10,9 @@ import { Observable } from 'rxjs/Observable';
 
 export class RightComponent  {
 
+  @ViewChild('formModal') formModal: { show: Function, hide: Function };
+
+  
   itemsRef: AngularFireList<any>;
   items: Observable<any[]>;
   
@@ -46,13 +49,19 @@ export class RightComponent  {
   }
 
   onUpdate(){
-    console.log(this.item.team)
+    console.log(this.item.key)
     this.itemsRef = this.afDB.list(`queue/${this.dateInput}`);
     this.itemsRef.update(this.item.key , { 
       team : this.item.team ,
       scene : this.item.scene,
       note : this.item.note
     })
+  }
+
+  onDelete(){
+    const itemsRef = this.afDB.list(`queue/${this.dateInput}`);
+    itemsRef.remove(this.item.key);
+    // this.onReset()
   }
 
 }
@@ -62,9 +71,9 @@ class Items  {
   number : number;
   timestamp2 = Date.now();
   timestamp ;
-  team:string;
-  scene:string;
-  user:string;
-  note:string;
+  team?:string;
+  scene?:string;
+  user?:string;
+  note?:string;
 
 }

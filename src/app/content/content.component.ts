@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Time } from '@angular/common';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
@@ -16,6 +16,10 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class ContentComponent  {
 
+
+  @ViewChild('loginModal') loginModal: { show: Function, hide: Function };
+
+
   public onlineStatus;
 
   itemsRef: AngularFireList<any>;
@@ -30,7 +34,8 @@ export class ContentComponent  {
   usericonLogin = "../../assets/unknown.jpg";
   userAvatar = "../../assets/unknown.jpg";
   userName: string = "Login";
-  userNameLogin: string = "Login";
+  userNameLogin: string = '';
+  note :string = '';
   loginStatus: boolean = true;
   loginLabel = "Log in";
   dateSelected: string = '';
@@ -72,17 +77,22 @@ export class ContentComponent  {
 
   }
 
+
   ngOnInit() {
+
+    setTimeout(() => {
+      this.loginModal.show();      
+    },1000); 
 
 
     setInterval(() => {         //replaced function() by ()=>
       this.myDate = new Date();
       this.checkInternet();
-
     }, 1000);
 
 
     this.users = [
+      { no: '0', name: '', icon: '../../assets/unknown.jpg' },
       { no: '1', name: 'JUM', icon: 'https://scontent.fbkk1-6.fna.fbcdn.net/v/t1.0-9/33848350_812327728965081_654839941200609280_n.jpg?_nc_fx=fbkk1-4&_nc_cat=0&_nc_eui2=AeEE5e8SSV3qTYwn63i7kvVSlWA0JCY6Hj8nx11SbdoaFv4tq-eTixVDblVScZ8BVnTU_5GWfkuDlePnORgS3Qa8J_O5u3kl0lMUVN7wy6XFSg&oh=e409ec62c1d23a107fcc973ff302ea08&oe=5BF1E054' },
       { no: '3', name: 'Max', icon: 'https://scontent.fbkk13-1.fna.fbcdn.net/v/t1.0-9/22894382_1349754738466301_3426447927998133456_n.jpg?_nc_cat=0&oh=4a535340f8ac28cfc92f4c9684ca1d38&oe=5B9C1229' },
       { no: '3', name: 'Nai', icon: 'https://scontent.fbkk1-3.fna.fbcdn.net/v/t1.0-9/34919581_1744173612338001_4489725079118151680_n.jpg?_nc_fx=fbkk1-4&_nc_cat=0&_nc_eui2=AeFhKSjAni9HoVJolnQ2GtVoAHD-km54kOAopaXWHMiHuSjoqSSb3Yr16Vnc1VguJW5C5vNJGYESiuqcqpf0Blj5UzQJWvnS1omNx4N-YFDu4A&oh=2ae4b5824ad738791b679cd71cc1ceac&oe=5C00A06C' },
@@ -143,18 +153,18 @@ export class ContentComponent  {
 
   onLogout() {
     this.userAvatar = "../../assets/unknown.jpg";
-    this.userName = "Login";
+    this.userName = '';
   }
 
   addQueue() {
 
-    if (this.dateInput != '') {
+    if (this.dateInput != '' ) {
 
       console.log(this.team);
       console.log(this.selectedValue);
 
       const itemsRef = this.afDB.list(`queue/${this.dateInput}`);
-      itemsRef.push({ team: this.team, scene: this.selectedValue, user: this.userNameLogin, timestamp: Date.now(), number: this.length + 1 });
+      itemsRef.push({ team: this.team, scene: this.selectedValue, user: this.userNameLogin, timestamp: Date.now(), note:this.note, number: this.length + 1 });
 
       // clear text
       this.team = "";
@@ -163,6 +173,7 @@ export class ContentComponent  {
       alert('กรุณาป้อนวันที่')
     }
   }
+  
 
 }
 

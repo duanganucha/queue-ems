@@ -21,7 +21,7 @@
 
         <!-- <a class="nav-link"><i class="fa fa-unlock-alt" aria-hidden="true"></i></a> -->
 
-        <button type="button" class="btn btn-sm btn-primary waves-light" data-toggle="modal" data-target="#login" (click)="demoBasic.show()"
+        <button type="button" class="btn btn-sm btn-primary waves-light" data-toggle="modal" data-target="#login" (click)="loginModal.show()"
           mdbWavesEffect>
           <img src="{{ usericonLogin }}" width="40px" height="40px"> {{ userNameLogin }}
           <i class="fa fa-unlock-alt" aria-hidden="true"></i>
@@ -117,7 +117,7 @@
 </div>
 
 
-<div mdbModal #demoBasic="mdb-modal" class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div mdbModal #loginModal="mdb-modal" class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <!--Modal: Avatar-->
   <div class="modal-dialog modal-sm cascading-modal modal-avatar" role="document">
@@ -139,7 +139,7 @@
           </select>
         </div>
         <div class="text-center" style="padding-top: 15px">
-          <button class="btn btn-cyan mt-1 waves-effect waves-light" (click)="demoBasic.hide()" (click)="onLogin()">{{loginLabel}}
+          <button class="btn btn-cyan mt-1 waves-effect waves-light" (click)="loginModal.hide()" (click)="onLogin()">{{loginLabel}}
             <i class="fa fa-sign-in ml-1"></i>
           </button>
         </div>
